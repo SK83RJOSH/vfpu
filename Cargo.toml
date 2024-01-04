@@ -1,0 +1,10 @@
+[package]
+name = "vfpu"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.79"
+genco = "0.17.8"
+serde = { version = "1.0.194", features = ["derive"] }
+serde_yaml = "0.9.30"
