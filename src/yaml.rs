@@ -49,7 +49,7 @@ pub struct Instruction {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct File {
+pub struct Database {
     #[serde(rename = "instruction-operands")]
     pub operands: HashMap<String, Operand>,
     pub encodings: HashMap<String, Encoding>,
