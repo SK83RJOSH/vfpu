@@ -180,6 +180,17 @@ fn vfpu_alu_m1(info: &InstructionInfo) -> Result<Tokens> {
     Ok(tokens)
 }
 
+fn vfpu_fixedop(info: &InstructionInfo) -> Result<Tokens> {
+    let mut tokens = Tokens::new();
+    tokens.append(quote! {
+        $("\n")
+        ($(format!("{}", info.name))) => {
+            $(quoted(format!(".word {}", info.opcode())))
+        };
+    });
+    Ok(tokens)
+}
+
 fn write_instruction(
     name: &str,
     instruction: &Instruction,
@@ -190,6 +201,7 @@ fn write_instruction(
     if let Some(instruction_tokens) = match instruction.encoding.as_str() {
         "vfpu-alu" => Some(vfpu_alu(&info)?),
         "vfpu-alu-m1" => Some(vfpu_alu_m1(&info)?),
+        "vfpu-fixedop" => Some(vfpu_fixedop(&info)?),
         _ => None,
     } {
         for line in info.instruction.description.trim().split('\n') {

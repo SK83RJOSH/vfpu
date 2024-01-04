@@ -422,6 +422,12 @@
     )
 };
 
+// Waits until the write buffer has been flushed 
+
+(vflush) => {
+    ".word 0b11111111111111110000010000001101"
+};
+
 // Converts the input packed float16 into full 32 bit floating point numbers. 
 
 (vh2f.s $rd:ident, $rs:ident) => {
@@ -1010,6 +1016,12 @@
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
     )
+};
+
+// Does nothing and wastes one VFPU cycle. Used to avoid pipeline hazards. This instruction does consume prefixes. 
+
+(vnop) => {
+    ".word 0b11111111111111110000000000000000"
 };
 
 // Performs element-wise floating point negated reciprocal 
@@ -1893,6 +1905,12 @@
         "| (", $crate::register_quad!($rs), " << 8)",
         "| (", $crate::register_quad!($rt), " << 16)",
     )
+};
+
+// Waits until all operations in the VFPU pipeline have completed 
+
+(vsync) => {
+    ".word 0b11111111111111110000001100100000"
 };
 
 // Converts four ABGR8888 color points to ABGR4444. The output 16 bit values are packed into a vector register pair. 
