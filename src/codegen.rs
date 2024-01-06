@@ -193,9 +193,9 @@ fn vector_imm5(info: &InstructionInfo) -> Result<Tokens> {
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
-                    $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0))", *constant))), })
+                    $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0)", *constant))), })
                     $(if info.arguments.contains(&"rs") { "| (", $$crate::register_$(info.register("rs", flavor)?)!($$rs), " << 8)", })
-                    $(if let Some(constant) = info.constant("rs") { $(quoted(format!("| (0b{} << 8))", *constant))), })
+                    $(if let Some(constant) = info.constant("rs") { $(quoted(format!("| (0b{} << 8)", *constant))), })
                     $(if info.arguments.contains(&"imm5") && info.name.eq("vcst") { "| (", $$crate::vfpu_const!($$imm5), " << 16)", })
                     $(if info.arguments.contains(&"imm5") && info.name.eq("vrot") { "| (", $$crate::vrot_immediate_$(info.register("rd", flavor)?)!($$($$imm5)*), " << 16)", })
                     $(if info.arguments.contains(&"imm5") && info.name.ne("vcst") && info.name.ne("vrot") { "| (", stringify!($$imm5), " << 16)", })
@@ -231,9 +231,9 @@ fn vfpu_alu(info: &InstructionInfo) -> Result<Tokens> {
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
-                    $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0))", *constant))), })
+                    $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0)", *constant))), })
                     $(if info.arguments.contains(&"rs") { "| (", $$crate::register_$(info.register("rs", flavor)?)!($$rs), " << 8)", })
-                    $(if let Some(constant) = info.constant("rs") { $(quoted(format!("| (0b{} << 8))", *constant))), })
+                    $(if let Some(constant) = info.constant("rs") { $(quoted(format!("| (0b{} << 8)", *constant))), })
                     $(if info.arguments.contains(&"rt") { "| (", $$crate::register_$(info.register("rt", flavor)?)!($$rt), " << 16)", })
                     $(if let Some(constant) = info.constant("rt") { $(quoted(format!("| (0b{} << 16)", *constant))), })
                 )
