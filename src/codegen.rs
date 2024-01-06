@@ -139,6 +139,36 @@ impl InstructionInfo<'_> {
     }
 }
 
+fn vector_imm16(info: &InstructionInfo) -> Result<Tokens> {
+    if info.instruction.flavors.is_empty() {
+        return Err(anyhow!(
+            "vector-imm16 instruction '{}' has no flavors",
+            info.name
+        ));
+    }
+
+    let mut tokens = Tokens::new();
+    for flavor in info.instruction.flavors.chars() {
+        let mode = match info.name {
+            "viim" => Ok("0b0000000000000000"),
+            "vfim" => Ok("0b0000000010000000"),
+            _ => Err(anyhow!("unknown vector-imm16 instruction '{}'", info.name)),
+        }?;
+        tokens.append(quote! {
+            $("\n")
+            ($(format!("{}.{}", info.name, flavor)) $(info.arguments())) => {
+                concat!(
+                    $(quoted(format!(".word {}", info.opcode()))),
+                    $(quoted(format!("| {}", mode))),
+                    $(if info.arguments.contains(&"imm16") { "| ((", stringify!($$imm16), " & 0xFFFF) << 0)", })
+                    $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 16)", })
+                )
+            };
+        });
+    }
+    Ok(tokens)
+}
+
 fn vector_imm5(info: &InstructionInfo) -> Result<Tokens> {
     if info.instruction.flavors.is_empty() {
         return Err(anyhow!(
@@ -265,9 +295,10 @@ fn write_instruction(
 ) -> Result<()> {
     let info = InstructionInfo::new(name, instruction, database)?;
     if let Some(instruction_tokens) = match instruction.encoding.as_str() {
+        "vector-imm16" => Some(vector_imm16(&info)?),
         "vector-imm5" => Some(vector_imm5(&info)?),
-        "vfpu-alu" => Some(vfpu_alu(&info)?),
         "vfpu-alu-m1" => Some(vfpu_alu_m1(&info)?),
+        "vfpu-alu" => Some(vfpu_alu(&info)?),
         "vfpu-fixedop" => Some(vfpu_fixedop(&info)?),
         _ => None,
     } {

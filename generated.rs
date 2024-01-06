@@ -660,6 +660,17 @@
     )
 };
 
+// Loads a float16 immediate value in a register 
+
+(vfim.s $rd:ident, $imm16:expr) => {
+    concat!(
+        ".word 0b11011111000000000000000000000000",
+        "| 0b0000000010000000",
+        "| ((", stringify!($imm16), " & 0xFFFF) << 0)",
+        "| (", $crate::register_single!($rd), " << 16)",
+    )
+};
+
 // Waits until the write buffer has been flushed 
 
 (vflush) => {
@@ -888,6 +899,17 @@
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (0b0000000 << 8))",
         "| (0b0000011 << 16)",
+    )
+};
+
+// Loads a signed 16 bit immediate value (converted to floating point) in a register 
+
+(viim.s $rd:ident, $imm16:expr) => {
+    concat!(
+        ".word 0b11011111000000000000000000000000",
+        "| 0b0000000000000000",
+        "| ((", stringify!($imm16), " & 0xFFFF) << 0)",
+        "| (", $crate::register_single!($rd), " << 16)",
     )
 };
 
