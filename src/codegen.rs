@@ -60,12 +60,26 @@ impl InstructionInfo<'_> {
         })
     }
 
+    fn prefix(&self, arg: &str) -> bool {
+        self.arguments.contains(&arg)
+            && match arg {
+                "rd" => self.instruction.prefix.contains(['d', 'D']),
+                "rs" => self.instruction.prefix.contains(['d', 'S']),
+                "rt" => self.instruction.prefix.contains('t'),
+                _ => false,
+            }
+    }
+
     fn arguments(&self) -> String {
         self.arguments
             .iter()
             .map(|arg| {
                 if self.registers.contains_key(arg) || self.name.eq("vcst") {
-                    format!("${arg}:ident")
+                    if self.prefix(arg) {
+                        format!("${arg}:ident $([$(${arg}p:tt)+])?")
+                    } else {
+                        format!("${arg}:ident")
+                    }
                 } else if self.name.eq("vrot") {
                     format!("[$(${arg}:tt)*]")
                 } else {
@@ -158,6 +172,7 @@ fn vector_imm16(info: &InstructionInfo) -> Result<Tokens> {
             $("\n")
             ($(format!("{}.{}", info.name, flavor)) $(info.arguments())) => {
                 concat!(
+                    $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"imm16") { "| ((", stringify!($$imm16), " & 0xFFFF) << 0)", })
@@ -190,6 +205,8 @@ fn vector_imm5(info: &InstructionInfo) -> Result<Tokens> {
             $("\n")
             ($(format!("{}.{}", info.name, flavor)) $(info.arguments())) => {
                 concat!(
+                    $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
+                    $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
@@ -228,6 +245,9 @@ fn vfpu_alu(info: &InstructionInfo) -> Result<Tokens> {
             $("\n")
             ($(format!("{}.{}", info.name, flavor)) $(info.arguments())) => {
                 concat!(
+                    $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
+                    $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
+                    $(if info.prefix("rt") { $$($$crate::instruction!(vpfxt $$($$rtp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
@@ -263,6 +283,9 @@ fn vfpu_alu_m1(info: &InstructionInfo) -> Result<Tokens> {
             $("\n")
             ($(format!("{}.{}", info.name, flavor)) $(info.arguments())) => {
                 concat!(
+                    $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
+                    $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
+                    $(if info.prefix("rt") { $$($$crate::instruction!(vpfxt $$($$rtp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
                     $(quoted(format!("| {}", mode))),
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
