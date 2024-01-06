@@ -1785,7 +1785,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
-        "| (", $crate::vrot_immediate_pair($($imm5)*), " << 16)",
+        "| (", $crate::vrot_immediate_pair!($($imm5)*), " << 16)",
     )
 };
 
@@ -1795,7 +1795,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
-        "| (", $crate::vrot_immediate_triple($($imm5)*), " << 16)",
+        "| (", $crate::vrot_immediate_triple!($($imm5)*), " << 16)",
     )
 };
 
@@ -1805,7 +1805,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
-        "| (", $crate::vrot_immediate_quad($($imm5)*), " << 16)",
+        "| (", $crate::vrot_immediate_quad!($($imm5)*), " << 16)",
     )
 };
 
