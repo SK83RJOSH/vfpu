@@ -6,6 +6,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0000001 << 16)",
     )
 };
 
@@ -15,6 +16,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0000001 << 16)",
     )
 };
 
@@ -24,6 +26,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0000001 << 16)",
     )
 };
 
@@ -33,6 +36,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0000001 << 16)",
     )
 };
 
@@ -86,6 +90,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010111 << 16)",
     )
 };
 
@@ -95,6 +100,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010111 << 16)",
     )
 };
 
@@ -104,6 +110,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010111 << 16)",
     )
 };
 
@@ -113,6 +120,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010111 << 16)",
     )
 };
 
@@ -124,6 +132,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1000111 << 16)",
     )
 };
 
@@ -133,6 +142,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b1000111 << 16)",
     )
 };
 
@@ -142,6 +152,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000111 << 16)",
     )
 };
 
@@ -153,6 +164,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1000010 << 16)",
     )
 };
 
@@ -162,6 +174,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000010 << 16)",
     )
 };
 
@@ -173,6 +186,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000011 << 16)",
     )
 };
 
@@ -184,6 +198,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0111001 << 16)",
     )
 };
 
@@ -195,6 +210,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010011 << 16)",
     )
 };
 
@@ -204,6 +220,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010011 << 16)",
     )
 };
 
@@ -213,6 +230,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010011 << 16)",
     )
 };
 
@@ -222,6 +240,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010011 << 16)",
     )
 };
 
@@ -246,6 +265,48 @@
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
         "| (", $crate::register_triple!($rt), " << 16)",
+    )
+};
+
+// Loads a predefined indexed floating point constant specified by the immediate field 
+
+(vcst.s $rd:ident, $imm5:ident) => {
+    concat!(
+        ".word 0b11010000000000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (", $crate::vfpu_const!($imm5), " << 16)",
+    )
+};
+
+(vcst.p $rd:ident, $imm5:ident) => {
+    concat!(
+        ".word 0b11010000000000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (", $crate::vfpu_const!($imm5), " << 16)",
+    )
+};
+
+(vcst.t $rd:ident, $imm5:ident) => {
+    concat!(
+        ".word 0b11010000000000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (", $crate::vfpu_const!($imm5), " << 16)",
+    )
+};
+
+(vcst.q $rd:ident, $imm5:ident) => {
+    concat!(
+        ".word 0b11010000000000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (", $crate::vfpu_const!($imm5), " << 16)",
     )
 };
 
@@ -343,6 +404,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010100 << 16)",
     )
 };
 
@@ -352,6 +414,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010100 << 16)",
     )
 };
 
@@ -361,6 +424,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010100 << 16)",
     )
 };
 
@@ -370,6 +434,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010100 << 16)",
     )
 };
 
@@ -381,6 +446,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0110010 << 16)",
     )
 };
 
@@ -390,6 +456,175 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0110010 << 16)",
+    )
+};
+
+// Performs element-wise float to integer conversion with optional scaling factor, rounding down (that is, towards the previous, equal or smaller, integer value) 
+
+(vf2id.s $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2id.p $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2id.t $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2id.q $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_quad!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+// Performs element-wise float to integer conversion with optional scaling factor, rounding to the nearest integer 
+
+(vf2in.s $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2in.p $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2in.t $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2in.q $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_quad!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+// Performs element-wise float to integer conversion with optional scaling factor, rounding up (that is, towards the next, equal or greater, integer value) 
+
+(vf2iu.s $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iu.p $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iu.t $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iu.q $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_quad!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+// Performs element-wise float to integer conversion with optional scaling factor, truncating the decimal argument (that is, rounding towards zero) 
+
+(vf2iz.s $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iz.p $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iz.t $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vf2iz.q $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010000000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_quad!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
     )
 };
 
@@ -401,6 +636,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1000110 << 16)",
     )
 };
 
@@ -410,6 +646,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b1000110 << 16)",
     )
 };
 
@@ -419,6 +656,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000110 << 16)",
     )
 };
 
@@ -436,6 +674,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0110011 << 16)",
     )
 };
 
@@ -445,6 +684,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0110011 << 16)",
     )
 };
 
@@ -487,6 +727,7 @@
         ".word 0b11110000100000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_mpair!($rs), " << 8)",
         "| (", $crate::register_pair!($rt), " << 16)",
     )
@@ -499,6 +740,7 @@
         ".word 0b11110001000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_mtriple!($rs), " << 8)",
         "| (", $crate::register_triple!($rt), " << 16)",
     )
@@ -510,6 +752,7 @@
     concat!(
         ".word 0b11110001100000000000000000000000",
         "| 0b1000000000000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_mquad!($rs), " << 8)",
         "| (", $crate::register_quad!($rt), " << 16)",
@@ -524,6 +767,49 @@
         "| 0b1000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0111101 << 16)",
+    )
+};
+
+// Performs element-wise integer to float conversion with optional scaling factor. The integer is divided by 2^scale after the conversion. 
+
+(vi2f.s $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010100000000000000000000000",
+        "| 0b0000000000000000",
+        "| (", $crate::register_single!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vi2f.p $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010100000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_pair!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vi2f.t $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010100000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_triple!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
+    )
+};
+
+(vi2f.q $rd:ident, $rs:ident, $scale:expr) => {
+    concat!(
+        ".word 0b11010010100000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_quad!($rs), " << 8)",
+        "| (", stringify!($scale), " << 16)",
     )
 };
 
@@ -535,6 +821,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0111111 << 16)",
     )
 };
 
@@ -544,6 +831,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0111111 << 16)",
     )
 };
 
@@ -555,6 +843,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0111100 << 16)",
     )
 };
 
@@ -566,6 +855,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0111110 << 16)",
     )
 };
 
@@ -575,6 +865,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0111110 << 16)",
     )
 };
 
@@ -585,6 +876,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000011 << 16)",
     )
 };
 
@@ -593,6 +886,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000011 << 16)",
     )
 };
 
@@ -604,6 +899,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0110111 << 16)",
     )
 };
 
@@ -615,6 +911,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010101 << 16)",
     )
 };
 
@@ -624,6 +921,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010101 << 16)",
     )
 };
 
@@ -633,6 +931,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010101 << 16)",
     )
 };
 
@@ -642,6 +941,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010101 << 16)",
     )
 };
 
@@ -694,6 +994,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_mpair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000011 << 16)",
     )
 };
 
@@ -702,6 +1004,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_mtriple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000011 << 16)",
     )
 };
 
@@ -710,6 +1014,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_mquad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000011 << 16)",
     )
 };
 
@@ -763,6 +1069,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_mpair!($rd), " << 0)",
         "| (", $crate::register_mpair!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -772,6 +1079,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_mtriple!($rd), " << 0)",
         "| (", $crate::register_mtriple!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -781,6 +1089,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_mquad!($rd), " << 0)",
         "| (", $crate::register_mquad!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -823,6 +1132,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_mpair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -831,6 +1142,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_mtriple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -839,6 +1152,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_mquad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -850,6 +1165,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -859,6 +1175,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -868,6 +1185,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -877,6 +1195,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0000000 << 16)",
     )
 };
 
@@ -961,6 +1280,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_mpair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -969,6 +1290,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_mtriple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -977,6 +1300,8 @@
         ".word 0b11110011100000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_mquad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -988,6 +1313,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0000010 << 16)",
     )
 };
 
@@ -997,6 +1323,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0000010 << 16)",
     )
 };
 
@@ -1006,6 +1333,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0000010 << 16)",
     )
 };
 
@@ -1015,6 +1343,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0000010 << 16)",
     )
 };
 
@@ -1032,6 +1361,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0011000 << 16)",
     )
 };
 
@@ -1041,6 +1371,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0011000 << 16)",
     )
 };
 
@@ -1050,6 +1381,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0011000 << 16)",
     )
 };
 
@@ -1059,6 +1391,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0011000 << 16)",
     )
 };
 
@@ -1070,6 +1403,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0011010 << 16)",
     )
 };
 
@@ -1079,6 +1413,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0011010 << 16)",
     )
 };
 
@@ -1088,6 +1423,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0011010 << 16)",
     )
 };
 
@@ -1097,6 +1433,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0011010 << 16)",
     )
 };
 
@@ -1108,6 +1445,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b1000100 << 16)",
     )
 };
 
@@ -1117,6 +1455,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1000100 << 16)",
     )
 };
 
@@ -1126,6 +1465,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b1000100 << 16)",
     )
 };
 
@@ -1135,6 +1475,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000100 << 16)",
     )
 };
 
@@ -1145,6 +1486,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -1153,6 +1496,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -1161,6 +1506,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -1169,6 +1516,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000111 << 16)",
     )
 };
 
@@ -1192,6 +1541,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010000 << 16)",
     )
 };
 
@@ -1201,6 +1551,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010000 << 16)",
     )
 };
 
@@ -1210,6 +1561,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010000 << 16)",
     )
 };
 
@@ -1219,6 +1571,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010000 << 16)",
     )
 };
 
@@ -1230,6 +1583,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0011100 << 16)",
     )
 };
 
@@ -1239,6 +1593,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0011100 << 16)",
     )
 };
 
@@ -1248,6 +1603,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0011100 << 16)",
     )
 };
 
@@ -1257,6 +1613,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0011100 << 16)",
     )
 };
 
@@ -1267,6 +1624,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100010 << 16)",
     )
 };
 
@@ -1275,6 +1634,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100010 << 16)",
     )
 };
 
@@ -1283,6 +1644,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100010 << 16)",
     )
 };
 
@@ -1291,6 +1654,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100010 << 16)",
     )
 };
 
@@ -1301,6 +1666,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100011 << 16)",
     )
 };
 
@@ -1309,6 +1676,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100011 << 16)",
     )
 };
 
@@ -1317,6 +1686,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100011 << 16)",
     )
 };
 
@@ -1325,6 +1696,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100011 << 16)",
     )
 };
 
@@ -1335,6 +1708,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100001 << 16)",
     )
 };
 
@@ -1343,6 +1718,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100001 << 16)",
     )
 };
 
@@ -1351,6 +1728,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100001 << 16)",
     )
 };
 
@@ -1359,6 +1738,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0100001 << 16)",
     )
 };
 
@@ -1368,7 +1749,41 @@
     concat!(
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
+        "| (0b0000000 << 0))",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0100000 << 16)",
+    )
+};
+
+// Calculates a rotation matrix row, given an angle argument 
+
+(vrot.p $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
+    concat!(
+        ".word 0b11110011100000000000000000000000",
+        "| 0b0000000010000000",
+        "| (", $crate::register_pair!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", $crate::vrot_immediate_pair($($imm5)*), " << 16)",
+    )
+};
+
+(vrot.t $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
+    concat!(
+        ".word 0b11110011100000000000000000000000",
+        "| 0b1000000000000000",
+        "| (", $crate::register_triple!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", $crate::vrot_immediate_triple($($imm5)*), " << 16)",
+    )
+};
+
+(vrot.q $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
+    concat!(
+        ".word 0b11110011100000000000000000000000",
+        "| 0b1000000010000000",
+        "| (", $crate::register_quad!($rd), " << 0)",
+        "| (", $crate::register_single!($rs), " << 8)",
+        "| (", $crate::vrot_immediate_quad($($imm5)*), " << 16)",
     )
 };
 
@@ -1380,6 +1795,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010001 << 16)",
     )
 };
 
@@ -1389,6 +1805,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010001 << 16)",
     )
 };
 
@@ -1398,6 +1815,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010001 << 16)",
     )
 };
 
@@ -1407,6 +1825,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010001 << 16)",
     )
 };
 
@@ -1418,6 +1837,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0111011 << 16)",
     )
 };
 
@@ -1427,6 +1847,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0111011 << 16)",
     )
 };
 
@@ -1438,6 +1859,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0000100 << 16)",
     )
 };
 
@@ -1447,6 +1869,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0000100 << 16)",
     )
 };
 
@@ -1456,6 +1879,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0000100 << 16)",
     )
 };
 
@@ -1465,6 +1889,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0000100 << 16)",
     )
 };
 
@@ -1476,6 +1901,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0000101 << 16)",
     )
 };
 
@@ -1485,6 +1911,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0000101 << 16)",
     )
 };
 
@@ -1494,6 +1921,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0000101 << 16)",
     )
 };
 
@@ -1503,6 +1931,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0000101 << 16)",
     )
 };
 
@@ -1526,6 +1955,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0110110 << 16)",
     )
 };
 
@@ -1653,6 +2083,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b1001010 << 16)",
     )
 };
 
@@ -1662,6 +2093,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1001010 << 16)",
     )
 };
 
@@ -1671,6 +2103,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b1001010 << 16)",
     )
 };
 
@@ -1680,6 +2113,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1001010 << 16)",
     )
 };
 
@@ -1691,6 +2125,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010010 << 16)",
     )
 };
 
@@ -1700,6 +2135,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010010 << 16)",
     )
 };
 
@@ -1709,6 +2145,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010010 << 16)",
     )
 };
 
@@ -1718,6 +2155,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010010 << 16)",
     )
 };
 
@@ -1771,6 +2209,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b1000101 << 16)",
     )
 };
 
@@ -1780,6 +2219,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b1000101 << 16)",
     )
 };
 
@@ -1791,6 +2231,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0010110 << 16)",
     )
 };
 
@@ -1800,6 +2241,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0010110 << 16)",
     )
 };
 
@@ -1809,6 +2251,7 @@
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
+        "| (0b0010110 << 16)",
     )
 };
 
@@ -1818,6 +2261,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b0010110 << 16)",
     )
 };
 
@@ -1829,6 +2273,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000000 << 16)",
     )
 };
 
@@ -1840,6 +2285,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1000001 << 16)",
     )
 };
 
@@ -1851,6 +2297,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1001000 << 16)",
     )
 };
 
@@ -1862,6 +2309,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1001001 << 16)",
     )
 };
 
@@ -1921,6 +2369,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1011001 << 16)",
     )
 };
 
@@ -1932,6 +2381,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1011010 << 16)",
     )
 };
 
@@ -1943,6 +2393,7 @@
         "| 0b1000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
+        "| (0b1011011 << 16)",
     )
 };
 
@@ -1990,6 +2441,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0111000 << 16)",
     )
 };
 
@@ -2001,6 +2453,7 @@
         "| 0b0000000000000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
+        "| (0b0111010 << 16)",
     )
 };
 
@@ -2010,6 +2463,7 @@
         "| 0b0000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
+        "| (0b0111010 << 16)",
     )
 };
 
@@ -2020,6 +2474,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -2028,6 +2484,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -2036,6 +2494,8 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };
 
@@ -2044,5 +2504,7 @@
         ".word 0b11010000000000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
+        "| (0b0000000 << 8))",
+        "| (0b0000110 << 16)",
     )
 };

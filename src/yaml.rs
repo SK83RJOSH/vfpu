@@ -46,6 +46,15 @@ pub struct Instruction {
     #[serde(default)]
     #[serde(skip_serializing_if = "String::is_empty")]
     pub prefix: String,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub rd: String,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub rs: String,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub rt: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
