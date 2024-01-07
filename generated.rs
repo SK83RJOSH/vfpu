@@ -324,7 +324,7 @@
 (vcst.s $rd:ident $([$($rdp:tt)+])?, $imm5:ident) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010000000000000000000000000000",
+        ".word 0b11010000011000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (0b0000000 << 8)",
@@ -335,7 +335,7 @@
 (vcst.p $rd:ident $([$($rdp:tt)+])?, $imm5:ident) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010000000000000000000000000000",
+        ".word 0b11010000011000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (0b0000000 << 8)",
@@ -346,7 +346,7 @@
 (vcst.t $rd:ident $([$($rdp:tt)+])?, $imm5:ident) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010000000000000000000000000000",
+        ".word 0b11010000011000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (0b0000000 << 8)",
@@ -357,7 +357,7 @@
 (vcst.q $rd:ident $([$($rdp:tt)+])?, $imm5:ident) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010000000000000000000000000000",
+        ".word 0b11010000011000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (0b0000000 << 8)",
@@ -553,7 +553,7 @@
 (vf2id.s $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010011000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
@@ -564,7 +564,7 @@
 (vf2id.p $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010011000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
@@ -575,7 +575,7 @@
 (vf2id.t $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010011000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
@@ -586,7 +586,7 @@
 (vf2id.q $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010011000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
@@ -645,7 +645,7 @@
 (vf2iu.s $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010010000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
@@ -656,7 +656,7 @@
 (vf2iu.p $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010010000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
@@ -667,7 +667,7 @@
 (vf2iu.t $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010010000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
@@ -678,7 +678,7 @@
 (vf2iu.q $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010010000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
@@ -691,7 +691,7 @@
 (vf2iz.s $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010001000000000000000000000",
         "| 0b0000000000000000",
         "| (", $crate::register_single!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
@@ -702,7 +702,7 @@
 (vf2iz.p $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010001000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_pair!($rs), " << 8)",
@@ -713,7 +713,7 @@
 (vf2iz.t $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010001000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_triple!($rs), " << 8)",
@@ -724,7 +724,7 @@
 (vf2iz.q $rd:ident $([$($rdp:tt)+])?, $rs:ident, $scale:expr) => {
     concat!(
         $($crate::instruction!(vpfxd $($rdp)*), "\n",)?
-        ".word 0b11010010000000000000000000000000",
+        ".word 0b11010010001000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_quad!($rs), " << 8)",
@@ -2046,7 +2046,7 @@
 
 (vrot.p $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
     concat!(
-        ".word 0b11110011100000000000000000000000",
+        ".word 0b11110011101000000000000000000000",
         "| 0b0000000010000000",
         "| (", $crate::register_pair!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
@@ -2056,7 +2056,7 @@
 
 (vrot.t $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
     concat!(
-        ".word 0b11110011100000000000000000000000",
+        ".word 0b11110011101000000000000000000000",
         "| 0b1000000000000000",
         "| (", $crate::register_triple!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",
@@ -2066,7 +2066,7 @@
 
 (vrot.q $rd:ident, $rs:ident, [$($imm5:tt)*]) => {
     concat!(
-        ".word 0b11110011100000000000000000000000",
+        ".word 0b11110011101000000000000000000000",
         "| 0b1000000010000000",
         "| (", $crate::register_quad!($rd), " << 0)",
         "| (", $crate::register_single!($rs), " << 8)",

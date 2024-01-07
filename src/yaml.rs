@@ -43,6 +43,9 @@ pub struct Instruction {
     #[serde(default)]
     #[serde(skip_serializing_if = "String::is_empty")]
     pub opcode: String,
+    #[serde(default, rename = "opcode2")]
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub opcode_suffix: String,
     #[serde(default)]
     #[serde(skip_serializing_if = "String::is_empty")]
     pub prefix: String,

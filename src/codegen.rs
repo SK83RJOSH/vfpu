@@ -95,7 +95,13 @@ impl InstructionInfo<'_> {
     }
 
     fn opcode(&self) -> String {
-        format!("0b{:0<32}", self.instruction.opcode)
+        format!(
+            "0b{:0<32}",
+            format!(
+                "{}{}",
+                self.instruction.opcode, self.instruction.opcode_suffix
+            )
+        )
     }
 
     fn register(&self, arg: &str, flavor: char) -> Result<&str> {
