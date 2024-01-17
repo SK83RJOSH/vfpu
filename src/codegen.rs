@@ -91,7 +91,12 @@ impl InstructionInfo<'_> {
     }
 
     fn constant(&self, arg: &str) -> Option<&&str> {
-        self.constants.get(arg)
+        self.constants
+            .get(arg)
+            .and_then(|constant| match constant.chars().all_equal_value() {
+                Ok('0') => None,
+                _ => Some(constant),
+            })
     }
 
     fn opcode(&self) -> String {
@@ -170,7 +175,7 @@ fn vector_imm16(info: &InstructionInfo) -> Result<Tokens> {
     let mut tokens = Tokens::new();
     for flavor in info.instruction.flavors.chars() {
         let mode = match info.name {
-            "viim" => Ok("0b0000000000000000"),
+            "viim" => Ok(""),
             "vfim" => Ok("0b0000000010000000"),
             _ => Err(anyhow!("unknown vector-imm16 instruction '{}'", info.name)),
         }?;
@@ -180,7 +185,7 @@ fn vector_imm16(info: &InstructionInfo) -> Result<Tokens> {
                 concat!(
                     $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
-                    $(quoted(format!("| {}", mode))),
+                    $(if !mode.is_empty() { $(quoted(format!("| {}", mode))), })
                     $(if info.arguments.contains(&"imm16") { "| ((", stringify!($$imm16), " & 0xFFFF) << 0)", })
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 16)", })
                 )
@@ -201,7 +206,7 @@ fn vector_imm5(info: &InstructionInfo) -> Result<Tokens> {
     let mut tokens = Tokens::new();
     for flavor in info.instruction.flavors.chars() {
         let mode = match flavor {
-            's' => Ok("0b0000000000000000"),
+            's' => Ok(""),
             'p' => Ok("0b0000000010000000"),
             't' => Ok("0b1000000000000000"),
             'q' => Ok("0b1000000010000000"),
@@ -214,7 +219,7 @@ fn vector_imm5(info: &InstructionInfo) -> Result<Tokens> {
                     $(if info.prefix("rd") { $$($$crate::instruction!(vpfxd $$($$rdp)*), "\n",)? })
                     $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
-                    $(quoted(format!("| {}", mode))),
+                    $(if !mode.is_empty() { $(quoted(format!("| {}", mode))), })
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
                     $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0)", *constant))), })
                     $(if info.arguments.contains(&"rs") { "| (", $$crate::register_$(info.register("rs", flavor)?)!($$rs), " << 8)", })
@@ -241,7 +246,7 @@ fn vfpu_alu(info: &InstructionInfo) -> Result<Tokens> {
     let mut tokens = Tokens::new();
     for flavor in info.instruction.flavors.chars() {
         let mode = match flavor {
-            's' => Ok("0b0000000000000000"),
+            's' => Ok(""),
             'p' => Ok("0b0000000010000000"),
             't' => Ok("0b1000000000000000"),
             'q' => Ok("0b1000000010000000"),
@@ -255,7 +260,7 @@ fn vfpu_alu(info: &InstructionInfo) -> Result<Tokens> {
                     $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
                     $(if info.prefix("rt") { $$($$crate::instruction!(vpfxt $$($$rtp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
-                    $(quoted(format!("| {}", mode))),
+                    $(if !mode.is_empty() { $(quoted(format!("| {}", mode))), })
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
                     $(if let Some(constant) = info.constant("rd") { $(quoted(format!("| (0b{} << 0)", *constant))), })
                     $(if info.arguments.contains(&"rs") { "| (", $$crate::register_$(info.register("rs", flavor)?)!($$rs), " << 8)", })
@@ -280,7 +285,7 @@ fn vfpu_alu_m1(info: &InstructionInfo) -> Result<Tokens> {
     let mut tokens = Tokens::new();
     for flavor in info.instruction.flavors.chars() {
         let mode = match flavor {
-            'p' => Ok("0b0000000000000000"),
+            'p' => Ok(""),
             't' => Ok("0b0000000010000000"),
             'q' => Ok("0b1000000000000000"),
             _ => Err(anyhow!("unknown flavor: {flavor}")),
@@ -293,7 +298,7 @@ fn vfpu_alu_m1(info: &InstructionInfo) -> Result<Tokens> {
                     $(if info.prefix("rs") { $$($$crate::instruction!(vpfxs $$($$rsp)*), "\n",)? })
                     $(if info.prefix("rt") { $$($$crate::instruction!(vpfxt $$($$rtp)*), "\n",)? })
                     $(quoted(format!(".word {}", info.opcode()))),
-                    $(quoted(format!("| {}", mode))),
+                    $(if !mode.is_empty() { $(quoted(format!("| {}", mode))), })
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
                     $(if info.arguments.contains(&"rd") { "| (", $$crate::register_$(info.register("rd", flavor)?)!($$rd), " << 0)", })
                     $(if info.arguments.contains(&"rs") { "| (", $$crate::register_$(info.register("rs", flavor)?)!($$rs), " << 8)", })
